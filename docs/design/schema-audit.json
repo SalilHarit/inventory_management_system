@@ -1,0 +1,5145 @@
+{
+  "status": "proposal audit, not deployed schema",
+  "date": "2026-10-28",
+  "tables": [
+    {
+      "name": "organization",
+      "source": "docs/design/database-schema.md",
+      "section": "Identity and shared catalog",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "code",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "name",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "base_currency_code",
+          "declaration": "FK currency",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "display_timezone",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "UQ code; timezone validated against PostgreSQL timezone names. Organization is a legal stock/accounting boundary.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "actor",
+      "source": "docs/design/database-schema.md",
+      "section": "Identity and shared catalog",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "bootstrap actor exception only"
+        },
+        {
+          "name": "display_name",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "kind",
+          "declaration": "text (human/service)",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "external_subject",
+          "declaration": "text?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "active",
+          "declaration": "boolean",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "UQ external_subject where present; service imports still have an actor. No password/secret storage in inventory tables.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "organization_actor",
+      "source": "docs/design/database-schema.md",
+      "section": "Identity and shared catalog",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "actor_id",
+          "declaration": "FK actor",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "role_code",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "active",
+          "declaration": "boolean",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "UQ(org_id,actor_id,role_code); role permission details deferred.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "currency",
+      "source": "docs/design/database-schema.md",
+      "section": "Identity and shared catalog",
+      "columns": [
+        {
+          "name": "code",
+          "declaration": "text PK",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "name",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "minor_units",
+          "declaration": "smallint",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "Global reference table; minor_units >= 0. All currency_code fields reference code directly.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "uom",
+      "source": "docs/design/database-schema.md",
+      "section": "Identity and shared catalog",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "code",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "name",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "dimension",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "fractional_allowed",
+          "declaration": "boolean",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "UQ(org_id,code); examples each, mass, length.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "item",
+      "source": "docs/design/database-schema.md",
+      "section": "Identity and shared catalog",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "sku",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "name",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "description",
+          "declaration": "text?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "base_uom_id",
+          "declaration": "FK uom",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "tracking_mode",
+          "declaration": "text (none/lot/serial)",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "expiry_required",
+          "declaration": "boolean",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "active",
+          "declaration": "boolean",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "UQ(org_id,sku). No quantity or invoice FK. Base unit and tracking mode cannot change after stock exists without a migration.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "item_uom",
+      "source": "docs/design/database-schema.md",
+      "section": "Identity and shared catalog",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "item_id",
+          "declaration": "FK item",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "uom_id",
+          "declaration": "FK uom",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "factor_to_base",
+          "declaration": "numeric(24,10)",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "is_purchase_default",
+          "declaration": "boolean",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "is_sales_default",
+          "declaration": "boolean",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "UQ(org_id,item_id,uom_id); factor > 0, same dimension or explicit packaging conversion. Partial UQ for each default. Base item unit factor = 1.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "item_identifier",
+      "source": "docs/design/database-schema.md",
+      "section": "Identity and shared catalog",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "item_id",
+          "declaration": "FK item",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "item_uom_id",
+          "declaration": "FK item_uom?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "scheme",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "value",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "UQ(org_id,scheme,value); optional unit identifies a case barcode. Validate unit belongs to item.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "party",
+      "source": "docs/design/database-schema.md",
+      "section": "Identity and shared catalog",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "code",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "name",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "active",
+          "declaration": "boolean",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "UQ(org_id,code); supplier/customer/manufacturer are roles, not duplicate party records.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "party_role",
+      "source": "docs/design/database-schema.md",
+      "section": "Identity and shared catalog",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "party_id",
+          "declaration": "FK party",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "role_code",
+          "declaration": "text (supplier/customer/manufacturer)",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "UQ(org_id,party_id,role_code).",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "supplier_item",
+      "source": "docs/design/database-schema.md",
+      "section": "Identity and shared catalog",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "supplier_id",
+          "declaration": "FK party",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "item_id",
+          "declaration": "FK item",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "supplier_sku",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "purchase_item_uom_id",
+          "declaration": "FK item_uom",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "minimum_qty",
+          "declaration": "quantity?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "order_multiple",
+          "declaration": "quantity?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "lead_time_days",
+          "declaration": "integer?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "UQ(org_id,supplier_id,supplier_sku); purchase unit belongs to item; positive quantities, nonnegative lead time. Multiple supplier codes may map to one item.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "supplier_price",
+      "source": "docs/design/database-schema.md",
+      "section": "Identity and shared catalog",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "supplier_item_id",
+          "declaration": "FK supplier_item",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "currency_code",
+          "declaration": "FK currency",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "minimum_qty",
+          "declaration": "quantity",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "unit_price",
+          "declaration": "money",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "valid_from",
+          "declaration": "date",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "valid_to",
+          "declaration": "date?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "minimum_qty > 0, price >= 0, valid_to >= valid_from; reject overlapping effective periods for same supplier item/currency/quantity tier. Historical lines retain price snapshots.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "location",
+      "source": "docs/design/database-schema.md",
+      "section": "Locations, tracking and physical stock",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "code",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "name",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "parent_id",
+          "declaration": "FK location?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "kind",
+          "declaration": "text (warehouse/bin/transit/external)",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "active",
+          "declaration": "boolean",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "UQ(org_id,code); no hierarchy cycles; only leaf locations hold stock. Transit is physically owned stock outside source/destination bins.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "stock_status",
+      "source": "docs/design/database-schema.md",
+      "section": "Locations, tracking and physical stock",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "code",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "name",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "allocatable",
+          "declaration": "boolean",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "UQ(org_id,code); available, quarantine, damaged, rejected. Allocation policy uses this flag.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "lot",
+      "source": "docs/design/database-schema.md",
+      "section": "Locations, tracking and physical stock",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "item_id",
+          "declaration": "FK item",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "internal_code",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "manufacturer_id",
+          "declaration": "FK party?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "manufacturer_lot",
+          "declaration": "text?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "manufactured_on",
+          "declaration": "date?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "expires_on",
+          "declaration": "date?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "UQ(org_id,item_id,internal_code); expiry >= manufacture date when both known. Supplier is receipt provenance, not unique identity of the batch.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "serial",
+      "source": "docs/design/database-schema.md",
+      "section": "Locations, tracking and physical stock",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "item_id",
+          "declaration": "FK item",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "serial_number",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "lot_id",
+          "declaration": "FK lot?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "UQ(org_id,item_id,serial_number); lot must belong to item.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "stock_bucket",
+      "source": "docs/design/database-schema.md",
+      "section": "Locations, tracking and physical stock",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "item_id",
+          "declaration": "FK item",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "location_id",
+          "declaration": "FK location",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "status_id",
+          "declaration": "FK stock_status",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "owner_party_id",
+          "declaration": "FK party?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "lot_id",
+          "declaration": "FK lot?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "serial_id",
+          "declaration": "FK serial?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "provenance_segment_id",
+          "declaration": "uuid FK provenance_segment",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "required for tracked trade; general policy under review"
+        }
+      ],
+      "rules": "UNIQUE NULLS NOT DISTINCT(org_id,item_id,location_id,status_id,owner_party_id,lot_id,serial_id). NULL owner means organization-owned; lots/serials must match item and serial lot. This is the stable lockable identity of a stock position. Trade addendum extends bucket identity with provenance_segment_id.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "stock_balance",
+      "source": "docs/design/database-schema.md",
+      "section": "Locations, tracking and physical stock",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "bucket_id",
+          "declaration": "FK stock_bucket",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "on_hand_qty",
+          "declaration": "quantity",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "reserved_qty",
+          "declaration": "quantity",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "version",
+          "declaration": "bigint",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "UQ(org_id,bucket_id); 0 <= reserved <= on_hand; quantity nonnegative initially. Deliberate projection maintained atomically with ledger. Not a master-data field.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "inventory_transaction",
+      "source": "docs/design/database-schema.md",
+      "section": "Locations, tracking and physical stock",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "number",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "kind",
+          "declaration": "text (receipt/issue/transfer/adjustment/production/return/status_change)",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "status",
+          "declaration": "text (draft/posted)",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "reason_code",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "notes",
+          "declaration": "text?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "occurred_at",
+          "declaration": "timestamptz",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "recorded_at",
+          "declaration": "timestamptz?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "posted_by",
+          "declaration": "FK actor?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "counterparty_id",
+          "declaration": "FK party?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "reversal_of_id",
+          "declaration": "FK inventory_transaction?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "request_key",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "request_hash",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "UQ(org_id,number), UQ(org_id,request_key), partial UQ(org_id,reversal_of_id) for full reversals. Bill is NOT required. Posted metadata required when posted; posted records immutable.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "inventory_line",
+      "source": "docs/design/database-schema.md",
+      "section": "Locations, tracking and physical stock",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "transaction_id",
+          "declaration": "FK inventory_transaction",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "line_no",
+          "declaration": "integer",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "item_id",
+          "declaration": "FK item",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "item_uom_id",
+          "declaration": "FK item_uom",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "entered_qty",
+          "declaration": "quantity",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "factor_to_base",
+          "declaration": "numeric(24,10)",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "base_qty",
+          "declaration": "quantity",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "source_bucket_id",
+          "declaration": "FK stock_bucket?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "destination_bucket_id",
+          "declaration": "FK stock_bucket?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "UQ(org_id,transaction_id,line_no), quantities > 0, factor > 0, base_qty = entered_qty * factor rounded under unit rules. At least one bucket; both must differ; item matches buckets and unit. This snapshots conversion used at posting.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "stock_ledger_entry",
+      "source": "docs/design/database-schema.md",
+      "section": "Locations, tracking and physical stock",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "transaction_line_id",
+          "declaration": "FK inventory_line",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "bucket_id",
+          "declaration": "FK stock_bucket",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "side",
+          "declaration": "text (source/destination)",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "qty_delta",
+          "declaration": "quantity",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "posted_at",
+          "declaration": "timestamptz",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "UQ(org_id,transaction_line_id,side); source negative, destination positive; never zero. Append-only. Index(org_id,bucket_id,posted_at,id). Ledger contains posted lines only.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "reservation",
+      "source": "docs/design/database-schema.md",
+      "section": "Locations, tracking and physical stock",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "number",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "item_id",
+          "declaration": "FK item",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "requested_base_qty",
+          "declaration": "quantity",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "expires_at",
+          "declaration": "timestamptz?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "status",
+          "declaration": "text (active/fulfilled/released/expired)",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "sales_order_line_id",
+          "declaration": "FK sales_order_line?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "purpose",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "UQ(org_id,number); requested quantity > 0. This is a demand header; does not change physical stock.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "reservation_allocation",
+      "source": "docs/design/database-schema.md",
+      "section": "Locations, tracking and physical stock",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "reservation_id",
+          "declaration": "FK reservation",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "bucket_id",
+          "declaration": "FK stock_bucket",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "allocated_qty",
+          "declaration": "quantity",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "consumed_qty",
+          "declaration": "quantity",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "released_qty",
+          "declaration": "quantity",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "UQ(org_id,reservation_id,bucket_id); quantities >= 0, consumed + released <= allocated; outstanding = allocated - consumed - released. Balance reserved equals sum outstanding allocations.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "reservation_event",
+      "source": "docs/design/database-schema.md",
+      "section": "Locations, tracking and physical stock",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "allocation_id",
+          "declaration": "FK reservation_allocation",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "event_type",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "qty",
+          "declaration": "quantity",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "actor_id",
+          "declaration": "FK actor",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "occurred_at",
+          "declaration": "timestamptz",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "transaction_line_id",
+          "declaration": "FK inventory_line?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "Append-only explanation of allocate/consume/release/expire. Consumption links to actual dispatch.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "document",
+      "source": "docs/design/database-schema.md",
+      "section": "Optional documents, purchasing and sales",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "kind",
+          "declaration": "text (bill/delivery_note/photo/count_sheet/other)",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "original_name",
+          "declaration": "text?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "storage_key",
+          "declaration": "text?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "sha256",
+          "declaration": "text?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "document_date",
+          "declaration": "date?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "reference",
+          "declaration": "text?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "Document registry, not a bill-specific requirement. Attachment storage and access policy separate.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "transaction_document",
+      "source": "docs/design/database-schema.md",
+      "section": "Optional documents, purchasing and sales",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "transaction_id",
+          "declaration": "FK inventory_transaction",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "document_id",
+          "declaration": "FK document",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "UQ(org_id,transaction_id,document_id). A transaction can have zero documents.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "purchase_order",
+      "source": "docs/design/database-schema.md",
+      "section": "Optional documents, purchasing and sales",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "number",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "supplier_id",
+          "declaration": "FK party",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "status",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "currency_code",
+          "declaration": "FK currency",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "ordered_on",
+          "declaration": "date",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "expected_on",
+          "declaration": "date?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "UQ(org_id,number); order creates expectation, not stock.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "purchase_order_line",
+      "source": "docs/design/database-schema.md",
+      "section": "Optional documents, purchasing and sales",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "order_id",
+          "declaration": "FK purchase_order",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "line_no",
+          "declaration": "integer",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "item_id",
+          "declaration": "FK item",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "supplier_item_id",
+          "declaration": "FK supplier_item?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "item_uom_id",
+          "declaration": "FK item_uom",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "ordered_qty",
+          "declaration": "quantity",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "cancelled_qty",
+          "declaration": "quantity",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "factor_to_base",
+          "declaration": "numeric(24,10)",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "unit_price",
+          "declaration": "money?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "UQ(org_id,order_id,line_no); quantity > 0, 0 <= cancelled <= ordered; snapshot supplier code and description in text columns for historical printing.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "receipt_order_allocation",
+      "source": "docs/design/database-schema.md",
+      "section": "Optional documents, purchasing and sales",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "inventory_line_id",
+          "declaration": "FK inventory_line",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "purchase_order_line_id",
+          "declaration": "FK purchase_order_line",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "base_qty",
+          "declaration": "quantity",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "UQ(org_id,inventory_line_id,purchase_order_line_id); quantity > 0. Supports partial/split receipts; lock order line when validating cumulative received quantity.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "supplier_bill",
+      "source": "docs/design/database-schema.md",
+      "section": "Optional documents, purchasing and sales",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "supplier_id",
+          "declaration": "FK party",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "supplier_invoice_number",
+          "declaration": "text?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "invoice_date",
+          "declaration": "date?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "currency_code",
+          "declaration": "FK currency",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "status",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "total_amount",
+          "declaration": "money?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "document_id",
+          "declaration": "FK document?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "Partial UQ(org_id,supplier_id,supplier_invoice_number) when present, with explicit credit-note/duplicate exception policy deferred. Capturing an attachment is optional. No automatic quantity posting.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "supplier_bill_line",
+      "source": "docs/design/database-schema.md",
+      "section": "Optional documents, purchasing and sales",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "bill_id",
+          "declaration": "FK supplier_bill",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "line_no",
+          "declaration": "integer",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "item_id",
+          "declaration": "FK item?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "description",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "billed_qty",
+          "declaration": "quantity?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "item_uom_id",
+          "declaration": "FK item_uom?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "unit_price",
+          "declaration": "money?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "line_amount",
+          "declaration": "money",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "UQ(org_id,bill_id,line_no); non-stock charges allowed. Item/UOM pairing consistency required when present.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "bill_receipt_allocation",
+      "source": "docs/design/database-schema.md",
+      "section": "Optional documents, purchasing and sales",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "bill_line_id",
+          "declaration": "FK supplier_bill_line",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "inventory_line_id",
+          "declaration": "FK inventory_line",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "base_qty",
+          "declaration": "quantity",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "allocated_amount",
+          "declaration": "money",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "UQ(org_id,bill_line_id,inventory_line_id); supports one bill to many receipts and vice versa. Matching compares bills and deliveries without changing received quantities.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "sales_order",
+      "source": "docs/design/database-schema.md",
+      "section": "Optional documents, purchasing and sales",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "number",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "customer_id",
+          "declaration": "FK party?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "status",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "ordered_at",
+          "declaration": "timestamptz",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "UQ(org_id,number); cash/direct dispatch may omit an order.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "sales_order_line",
+      "source": "docs/design/database-schema.md",
+      "section": "Optional documents, purchasing and sales",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "order_id",
+          "declaration": "FK sales_order",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "line_no",
+          "declaration": "integer",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "item_id",
+          "declaration": "FK item",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "item_uom_id",
+          "declaration": "FK item_uom",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "ordered_qty",
+          "declaration": "quantity",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "factor_to_base",
+          "declaration": "numeric(24,10)",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "UQ(org_id,order_id,line_no); positive quantity and factor.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "dispatch_order_allocation",
+      "source": "docs/design/database-schema.md",
+      "section": "Optional documents, purchasing and sales",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "inventory_line_id",
+          "declaration": "FK inventory_line",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "sales_order_line_id",
+          "declaration": "FK sales_order_line",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "base_qty",
+          "declaration": "quantity",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "UQ(org_id,inventory_line_id,sales_order_line_id); cumulative dispatch bounded under row lock.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "line_cost_estimate",
+      "source": "docs/design/database-schema.md",
+      "section": "Valuation, counts and sector extensions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "inventory_line_id",
+          "declaration": "FK inventory_line",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "unit_cost",
+          "declaration": "money?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "currency_code",
+          "declaration": "FK currency?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "basis",
+          "declaration": "text (unknown/estimated/documented/zero_cost)",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "source_document_id",
+          "declaration": "FK document?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "UQ(org_id,inventory_line_id); unknown => NULL cost/currency; other bases require cost >= 0 and currency; zero_cost => cost=0. Freeze on posting. Not the final accounting valuation ledger.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "valuation_event",
+      "source": "docs/design/database-schema.md",
+      "section": "Valuation, counts and sector extensions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "inventory_line_id",
+          "declaration": "FK inventory_line",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "amount_base_currency",
+          "declaration": "money?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "base_qty",
+          "declaration": "quantity",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "status",
+          "declaration": "text (pending/estimated/final)",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "method",
+          "declaration": "text?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "effective_at",
+          "declaration": "timestamptz",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "reverses_id",
+          "declaration": "FK valuation_event?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "bill_allocation_id",
+          "declaration": "FK bill_receipt_allocation?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "Append-only; pending amount NULL; final amount not NULL. Revaluation adds events, not quantity. Full FIFO layers, consumption allocations, FX snapshots and landed-cost rules need a separate accounting design before authoritative valuation.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "stock_count",
+      "source": "docs/design/database-schema.md",
+      "section": "Valuation, counts and sector extensions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "number",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "location_id",
+          "declaration": "FK location",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "status",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "snapshot_at",
+          "declaration": "timestamptz?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "completed_at",
+          "declaration": "timestamptz?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "UQ(org_id,number); blind counting can hide expected quantities in UI.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "stock_count_line",
+      "source": "docs/design/database-schema.md",
+      "section": "Valuation, counts and sector extensions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "count_id",
+          "declaration": "FK stock_count",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "bucket_id",
+          "declaration": "FK stock_bucket",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "expected_qty",
+          "declaration": "quantity",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "counted_qty",
+          "declaration": "quantity?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "expected_balance_version",
+          "declaration": "bigint",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "adjustment_line_id",
+          "declaration": "FK inventory_line?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "UQ(org_id,count_id,bucket_id); reject stale approval if balance version changed, or recount. Do not overwrite quantity with stale counted totals.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "quality_inspection",
+      "source": "docs/design/database-schema.md",
+      "section": "Valuation, counts and sector extensions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "lot_id",
+          "declaration": "FK lot?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "receipt_line_id",
+          "declaration": "FK inventory_line?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "status",
+          "declaration": "text (pending/pass/fail)",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "inspected_by",
+          "declaration": "FK actor?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "inspected_at",
+          "declaration": "timestamptz?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "notes",
+          "declaration": "text?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "At least one target; release via stock status-change transaction. Policy and evidence requirements are sector-specific.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "quality_result",
+      "source": "docs/design/database-schema.md",
+      "section": "Valuation, counts and sector extensions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "inspection_id",
+          "declaration": "FK quality_inspection",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "test_code",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "measured_value",
+          "declaration": "text?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "result",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "document_id",
+          "declaration": "FK document?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "UQ(org_id,inspection_id,test_code); typed measurement limits deferred to sector module.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "bom",
+      "source": "docs/design/database-schema.md",
+      "section": "Valuation, counts and sector extensions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "output_item_id",
+          "declaration": "FK item",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "revision",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "output_base_qty",
+          "declaration": "quantity",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "status",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "UQ(org_id,output_item_id,revision); output > 0; released revision immutable.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "bom_component",
+      "source": "docs/design/database-schema.md",
+      "section": "Valuation, counts and sector extensions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "bom_id",
+          "declaration": "FK bom",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "line_no",
+          "declaration": "integer",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "component_item_id",
+          "declaration": "FK item",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "base_qty",
+          "declaration": "quantity",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "scrap_allowance",
+          "declaration": "numeric(10,6)",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "UQ(org_id,bom_id,line_no); quantity > 0, allowance >= 0; detect recursive BOM cycles.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "production_order",
+      "source": "docs/design/database-schema.md",
+      "section": "Valuation, counts and sector extensions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "number",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "bom_id",
+          "declaration": "FK bom",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "planned_output_base_qty",
+          "declaration": "quantity",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "status",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "UQ(org_id,number); positive output; exact released BOM revision preserved.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "production_posting",
+      "source": "docs/design/database-schema.md",
+      "section": "Valuation, counts and sector extensions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "production_order_id",
+          "declaration": "FK production_order",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "transaction_id",
+          "declaration": "FK inventory_transaction",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "UQ(org_id,transaction_id); transaction lines distinguish consumption and outputs through their source/destination.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "production_genealogy",
+      "source": "docs/design/database-schema.md",
+      "section": "Valuation, counts and sector extensions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "consumed_line_id",
+          "declaration": "FK inventory_line",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "output_line_id",
+          "declaration": "FK inventory_line",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "attributed_input_base_qty",
+          "declaration": "quantity",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "UQ(org_id,consumed_line_id,output_line_id); positive input, both in compatible production context. Links ingredient lots to outputs for traceability, not a compliance certification.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "entity_registry",
+      "source": "docs/design/database-schema.md",
+      "section": "Integration and audit",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "entity_type",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "retired_at",
+          "declaration": "timestamptz?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "Shared integration identity. Integratable core rows use their id as FK to registry; deferred validation verifies registry type matches real row. Avoid unvalidated object_type/object_id pointers.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "integration_connection",
+      "source": "docs/design/database-schema.md",
+      "section": "Integration and audit",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "code",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "provider",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "external_company_id",
+          "declaration": "text?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "authority_policy",
+          "declaration": "jsonb",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "enabled",
+          "declaration": "boolean",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "secret_reference",
+          "declaration": "text?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "UQ(org_id,code); secrets outside tables; authority policy validated against a versioned schema.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "external_mapping",
+      "source": "docs/design/database-schema.md",
+      "section": "Integration and audit",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "connection_id",
+          "declaration": "FK integration_connection",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "entity_id",
+          "declaration": "FK entity_registry",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "external_type",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "external_id",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "external_version",
+          "declaration": "text?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "last_seen_at",
+          "declaration": "timestamptz?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "UQ(org_id,connection_id,external_type,external_id), UQ(org_id,connection_id,entity_id,external_type). Merges/aliases need explicit policy, not accidental overwrites.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "integration_inbox",
+      "source": "docs/design/database-schema.md",
+      "section": "Integration and audit",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "connection_id",
+          "declaration": "FK integration_connection",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "event_key",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "payload_hash",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "payload",
+          "declaration": "jsonb",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "status",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "received_at",
+          "declaration": "timestamptz",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "processed_at",
+          "declaration": "timestamptz?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "attempts",
+          "declaration": "integer",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "error_code",
+          "declaration": "text?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "UQ(org_id,connection_id,event_key); same key/different hash is conflict; payload retention/redaction policy required.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "integration_outbox",
+      "source": "docs/design/database-schema.md",
+      "section": "Integration and audit",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "entity_id",
+          "declaration": "FK entity_registry",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "event_type",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "entity_version",
+          "declaration": "bigint",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "payload",
+          "declaration": "jsonb",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "occurred_at",
+          "declaration": "timestamptz",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "UQ(org_id,entity_id,entity_version,event_type); inserted with local business transaction.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "integration_delivery",
+      "source": "docs/design/database-schema.md",
+      "section": "Integration and audit",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "outbox_id",
+          "declaration": "FK integration_outbox",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "connection_id",
+          "declaration": "FK integration_connection",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "status",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "attempts",
+          "declaration": "integer",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "available_at",
+          "declaration": "timestamptz",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "lease_until",
+          "declaration": "timestamptz?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "last_error",
+          "declaration": "text?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "delivered_at",
+          "declaration": "timestamptz?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "UQ(org_id,outbox_id,connection_id); independent delivery state per destination.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "audit_event",
+      "source": "docs/design/database-schema.md",
+      "section": "Integration and audit",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "actor_id",
+          "declaration": "FK actor",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "entity_id",
+          "declaration": "FK entity_registry?",
+          "source": "docs/design/database-schema.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "action",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "request_id",
+          "declaration": "text",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "occurred_at",
+          "declaration": "timestamptz",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "changes",
+          "declaration": "jsonb",
+          "source": "docs/design/database-schema.md",
+          "nullability": "required by draft convention"
+        }
+      ],
+      "rules": "Append-only, restrict access; redact credentials/PII; not a substitute for quantity ledger.",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "establishment",
+      "source": "docs/design/compliance-and-trade.md",
+      "section": "Proposed schema additions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "code",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "location_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "legal_name",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "address",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "jurisdiction_code",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        }
+      ],
+      "rules": "History/versioning for the actual operating premises; hierarchy and registration applicability reviewed",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "business_registration",
+      "source": "docs/design/compliance-and-trade.md",
+      "section": "Proposed schema additions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "establishment_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "party_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "registration_type",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "identifier",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "jurisdiction_code",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "valid_from",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "valid_to",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "status",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "evidence_document_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "Exactly one registration subject; retain historical validity, do not treat any number as proof of current validity",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "item_classification",
+      "source": "docs/design/compliance-and-trade.md",
+      "section": "Proposed schema additions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "item_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "jurisdiction_code",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "scheme",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "code",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "effective_from",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "effective_to",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "reviewed_by",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "evidence_document_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "Different national tariff/controlled-product classifications can coexist; classification requires qualified review",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "trade_shipment",
+      "source": "docs/design/compliance-and-trade.md",
+      "section": "Proposed schema additions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "number",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "direction",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "origin_country",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "destination_country",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "importer_party_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "exporter_party_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "consignee_party_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "customs_regime",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "incoterm_code",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "incoterm_version",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "named_place",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "currency_code",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "version",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        }
+      ],
+      "rules": "Internal shipment is not a filing. Incoterm is commercial allocation information, not automatic proof of origin, ownership or clearance",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "trade_shipment_line",
+      "source": "docs/design/compliance-and-trade.md",
+      "section": "Proposed schema additions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "shipment_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "line_no",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "item_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "quantity",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "item_uom_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "base_qty",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "origin_country",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "classification_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        }
+      ],
+      "rules": "Snapshot approved classification/version; origin is not necessarily supplier country or ship-from country",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "shipment_stock_allocation",
+      "source": "docs/design/compliance-and-trade.md",
+      "section": "Proposed schema additions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "shipment_line_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "inventory_line_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "provenance_segment_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "base_qty",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        }
+      ],
+      "rules": "Supports partial and split shipments; locked cumulative allocations cannot exceed stock/line quantities",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "provenance_segment",
+      "source": "docs/design/compliance-and-trade.md",
+      "section": "Proposed schema additions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "item_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "lot_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "owner_party_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "originating_receipt_line_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "customs_regime",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "origin_evidence_document_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "predecessor_segment_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "Stable provenance identity; same lot from different import treatments is not merged implicitly",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "customs_declaration",
+      "source": "docs/design/compliance-and-trade.md",
+      "section": "Proposed schema additions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "shipment_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "declaration_type",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "reference",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "port_code",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "declaration_date",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "version",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "external_mapping_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "evidence_document_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "Bill of Entry/shipping bill scoped by authority/port/date as needed; exact unique identifier contract defined per integration",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "customs_declaration_line",
+      "source": "docs/design/compliance-and-trade.md",
+      "section": "Proposed schema additions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "declaration_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "line_no",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "shipment_line_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "declared_base_qty",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "assessed_value",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "currency_code",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        }
+      ],
+      "rules": "Matching must support multiple line allocations before implementation if declaration and commercial lines differ",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "customs_release_event",
+      "source": "docs/design/compliance-and-trade.md",
+      "section": "Proposed schema additions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "declaration_line_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "released_base_qty",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "action_scope",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "occurred_at",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "source_authority",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "evidence_document_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "supersedes_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "Append-only release/revocation history. Partial quantities retained; effective balance cannot exceed declared quantity",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "shipment_document",
+      "source": "docs/design/compliance-and-trade.md",
+      "section": "Proposed schema additions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "shipment_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "shipment_line_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "document_version_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "document_role",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        }
+      ],
+      "rules": "Transport document, commercial invoice, packing list, certificate or permit are distinct roles",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "permit",
+      "source": "docs/design/compliance-and-trade.md",
+      "section": "Proposed schema additions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "registration_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "permit_type",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "reference",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "jurisdiction_code",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "valid_from",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "valid_to",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "evidence_document_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "status",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        }
+      ],
+      "rules": "Scope through normalized permit_scope rows; different licences have different quantitative limits",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "permit_scope",
+      "source": "docs/design/compliance-and-trade.md",
+      "section": "Proposed schema additions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "permit_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "item_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "origin_country",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "destination_country",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "permitted_base_qty",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "uom_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "Explicit scope; quantity has a defined item/unit basis; no meaningless total across incompatible goods",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "permit_usage",
+      "source": "docs/design/compliance-and-trade.md",
+      "section": "Proposed schema additions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "permit_scope_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "shipment_line_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "base_qty",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "usage_type",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "reversal_of_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "Append-only consumption/release, locked cumulative limits; no double spending across concurrent shipments",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "requirement_version",
+      "source": "docs/design/compliance-and-trade.md",
+      "section": "Proposed schema additions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "code",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "revision",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "jurisdiction_code",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "authority_url",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "effective_from",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "effective_to",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "applicability_schema_version",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "definition",
+          "declaration": "jsonb",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "status",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "approved_by",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        }
+      ],
+      "rules": "Immutable published rules, validated schema, human-reviewed applicability; no autonomous legal rule generation",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "compliance_case",
+      "source": "docs/design/compliance-and-trade.md",
+      "section": "Proposed schema additions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "shipment_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "inventory_transaction_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "case_type",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "status",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "assigned_actor_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "subject_version",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "subject_hash",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        }
+      ],
+      "rules": "Explicitly constrained target; scope is company-consistent and relevant to action",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "compliance_check",
+      "source": "docs/design/compliance-and-trade.md",
+      "section": "Proposed schema additions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "case_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "requirement_version_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "action_scope",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "outcome",
+          "declaration": "(pass/fail/unknown/not_applicable)",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "evaluated_at",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "valid_until",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "evaluated_subject_hash",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "evidence_document_version_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "Append-only evaluation snapshots; not_applicable requires rationale; changed scope/data invalidates reuse",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "inventory_hold",
+      "source": "docs/design/compliance-and-trade.md",
+      "section": "Proposed schema additions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "provenance_segment_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "lot_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "shipment_line_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "hold_type",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "reason",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "effective_at",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "imposed_by",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "source_check_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "Explicit target and propagation rules; hold event history for impose/release; scoped quantity allocation table if hold is partial",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "approval_event",
+      "source": "docs/design/compliance-and-trade.md",
+      "section": "Proposed schema additions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "case_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "decision",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "actor_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "role_at_decision",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "reason",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "decided_at",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "subject_hash",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "evidence_document_version_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        }
+      ],
+      "rules": "Maker/checker where required; approval bound to exact facts, cannot approve a changed shipment accidentally",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "document_version",
+      "source": "docs/design/compliance-and-trade.md",
+      "section": "Proposed schema additions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "document_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "version_no",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "storage_key",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "content_hash",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "recorded_at",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "supersedes_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "source",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "verification_status",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        }
+      ],
+      "rules": "Immutable original files and versions; deleting/replacing an attachment must not rewrite evidence",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "audit_review",
+      "source": "docs/design/compliance-and-trade.md",
+      "section": "Proposed schema additions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "scope",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "period_from",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "period_to",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "reviewer_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "reviewed_at",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "finding_count",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "report_document_version_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        }
+      ],
+      "rules": "Shows actual audit review rather than merely having logs; full finding linkage before implementation",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    },
+    {
+      "name": "evidence_export",
+      "source": "docs/design/compliance-and-trade.md",
+      "section": "Proposed schema additions",
+      "columns": [
+        {
+          "name": "id",
+          "declaration": "uuid PK",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_at",
+          "declaration": "timestamptz",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "created_by",
+          "declaration": "uuid FK actor",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "org_id",
+          "declaration": "uuid FK organization",
+          "source": "common convention",
+          "nullability": "required by draft convention"
+        },
+        {
+          "name": "case_id",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "nullable in draft"
+        },
+        {
+          "name": "requested_by",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "snapshot_hash",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "manifest_storage_key",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        },
+        {
+          "name": "format_version",
+          "declaration": "type not specified in source draft",
+          "source": "docs/design/compliance-and-trade.md",
+          "nullability": "not specified; review required"
+        }
+      ],
+      "rules": "Reproducible case pack with scoped movements, documents, decisions and external acknowledgements",
+      "status": "proposed; not migrated",
+      "mutable_metadata": "updated_at timestamptz, updated_by uuid FK actor, version bigint apply to mutable master/draft records; per-table assignment needs review"
+    }
+  ],
+  "deferred_structures": [
+    "declaration_line_allocation",
+    "hold events and partial hold allocations",
+    "many-input provenance genealogy",
+    "audit findings and review scopes",
+    "role permissions and site scopes",
+    "valuation layers, FX and landed costs",
+    "retention policies and legal holds"
+  ]
+}

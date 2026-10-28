@@ -1,0 +1,2950 @@
+{
+  "retrieved_at": "2026-10-28T06:13:15.845888+00:00",
+  "method": "Static field declarations only; not a live database dump. Inherited/framework fields and runtime constraints may be absent.",
+  "sources": [
+    {
+      "repository": "frappe/erpnext",
+      "ref": "develop",
+      "commit": "ec20fe5ca1375934f12e2ccd51a35eaf19ecf4e0",
+      "path": "erpnext/stock/doctype/item/item.json",
+      "url": "https://github.com/frappe/erpnext/blob/ec20fe5ca1375934f12e2ccd51a35eaf19ecf4e0/erpnext/stock/doctype/item/item.json",
+      "models": {
+        "Item": [
+          {
+            "name": "naming_series",
+            "type": "Select",
+            "target": "STO-ITEM-.YYYY.-",
+            "required": false
+          },
+          {
+            "name": "item_code",
+            "type": "Data",
+            "target": null,
+            "required": true
+          },
+          {
+            "name": "variant_of",
+            "type": "Link",
+            "target": "Item",
+            "required": false
+          },
+          {
+            "name": "item_name",
+            "type": "Data",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "item_group",
+            "type": "Link",
+            "target": "Item Group",
+            "required": true
+          },
+          {
+            "name": "stock_uom",
+            "type": "Link",
+            "target": "UOM",
+            "required": true
+          },
+          {
+            "name": "disabled",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "allow_alternative_item",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "is_stock_item",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "include_item_in_manufacturing",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "opening_stock",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "valuation_rate",
+            "type": "Currency",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "standard_rate",
+            "type": "Currency",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "is_fixed_asset",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "asset_category",
+            "type": "Link",
+            "target": "Asset Category",
+            "required": false
+          },
+          {
+            "name": "asset_naming_series",
+            "type": "Select",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "image",
+            "type": "Attach Image",
+            "target": "image",
+            "required": false
+          },
+          {
+            "name": "brand",
+            "type": "Link",
+            "target": "Brand",
+            "required": false
+          },
+          {
+            "name": "description",
+            "type": "Text Editor",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "barcodes",
+            "type": "Table",
+            "target": "Item Barcode",
+            "required": false
+          },
+          {
+            "name": "shelf_life_in_days",
+            "type": "Int",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "end_of_life",
+            "type": "Date",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "default_material_request_type",
+            "type": "Select",
+            "target": "Purchase\nMaterial Transfer\nMaterial Issue\nManufacture\nCustomer Provided",
+            "required": false
+          },
+          {
+            "name": "valuation_method",
+            "type": "Select",
+            "target": "\nFIFO\nMoving Average\nLIFO\nStandard Cost",
+            "required": false
+          },
+          {
+            "name": "warranty_period",
+            "type": "Data",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "weight_per_unit",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "weight_uom",
+            "type": "Link",
+            "target": "UOM",
+            "required": false
+          },
+          {
+            "name": "reorder_levels",
+            "type": "Table",
+            "target": "Item Reorder",
+            "required": false
+          },
+          {
+            "name": "uoms",
+            "type": "Table",
+            "target": "UOM Conversion Detail",
+            "required": false
+          },
+          {
+            "name": "has_batch_no",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "create_new_batch",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "batch_number_series",
+            "type": "Data",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "has_expiry_date",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "retain_sample",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "sample_quantity",
+            "type": "Int",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "has_serial_no",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "serial_no_series",
+            "type": "Data",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "use_serial_no_wise_valuation",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "has_variants",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "variant_based_on",
+            "type": "Select",
+            "target": "Item Attribute\nManufacturer",
+            "required": false
+          },
+          {
+            "name": "attributes",
+            "type": "Table",
+            "target": "Item Variant Attribute",
+            "required": false
+          },
+          {
+            "name": "item_defaults",
+            "type": "Table",
+            "target": "Item Default",
+            "required": false
+          },
+          {
+            "name": "is_purchase_item",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "purchase_uom",
+            "type": "Link",
+            "target": "UOM",
+            "required": false
+          },
+          {
+            "name": "min_order_qty",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "safety_stock",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "lead_time_days",
+            "type": "Int",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "last_purchase_rate",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "is_customer_provided_item",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "delivered_by_supplier",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "supplier_items",
+            "type": "Table",
+            "target": "Item Supplier",
+            "required": false
+          },
+          {
+            "name": "country_of_origin",
+            "type": "Link",
+            "target": "Country",
+            "required": false
+          },
+          {
+            "name": "customs_tariff_number",
+            "type": "Link",
+            "target": "Customs Tariff Number",
+            "required": false
+          },
+          {
+            "name": "sales_uom",
+            "type": "Link",
+            "target": "UOM",
+            "required": false
+          },
+          {
+            "name": "is_sales_item",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "max_discount",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "enable_deferred_revenue",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "no_of_months",
+            "type": "Int",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "enable_deferred_expense",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "no_of_months_exp",
+            "type": "Int",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "customer_items",
+            "type": "Table",
+            "target": "Item Customer Detail",
+            "required": false
+          },
+          {
+            "name": "taxes",
+            "type": "Table",
+            "target": "Item Tax",
+            "required": false
+          },
+          {
+            "name": "inspection_required_before_purchase",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "inspection_required_before_delivery",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "quality_inspection_template",
+            "type": "Link",
+            "target": "Quality Inspection Template",
+            "required": false
+          },
+          {
+            "name": "default_bom",
+            "type": "Link",
+            "target": "BOM",
+            "required": false
+          },
+          {
+            "name": "is_sub_contracted_item",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "customer_code",
+            "type": "Small Text",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "total_projected_qty",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "over_delivery_receipt_allowance",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "over_billing_allowance",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "auto_create_assets",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "default_item_manufacturer",
+            "type": "Link",
+            "target": "Manufacturer",
+            "required": false
+          },
+          {
+            "name": "default_manufacturer_part_no",
+            "type": "Data",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "grant_commission",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "is_grouped_asset",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "allow_negative_stock",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "purchase_tax_withholding_category",
+            "type": "Link",
+            "target": "Tax Withholding Category",
+            "required": false
+          },
+          {
+            "name": "sales_tax_withholding_category",
+            "type": "Link",
+            "target": "Tax Withholding Category",
+            "required": false
+          },
+          {
+            "name": "restrict_to_companies",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "allowed_companies",
+            "type": "Table MultiSelect",
+            "target": "Company Restriction",
+            "required": false
+          }
+        ]
+      }
+    },
+    {
+      "repository": "frappe/erpnext",
+      "ref": "develop",
+      "commit": "ec20fe5ca1375934f12e2ccd51a35eaf19ecf4e0",
+      "path": "erpnext/stock/doctype/bin/bin.json",
+      "url": "https://github.com/frappe/erpnext/blob/ec20fe5ca1375934f12e2ccd51a35eaf19ecf4e0/erpnext/stock/doctype/bin/bin.json",
+      "models": {
+        "Bin": [
+          {
+            "name": "warehouse",
+            "type": "Link",
+            "target": "Warehouse",
+            "required": true
+          },
+          {
+            "name": "item_code",
+            "type": "Link",
+            "target": "Item",
+            "required": true
+          },
+          {
+            "name": "reserved_qty",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "actual_qty",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "ordered_qty",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "indented_qty",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "planned_qty",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "projected_qty",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "reserved_qty_for_production",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "reserved_qty_for_sub_contract",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "stock_uom",
+            "type": "Link",
+            "target": "UOM",
+            "required": false
+          },
+          {
+            "name": "company",
+            "type": "Link",
+            "target": "Company",
+            "required": false
+          },
+          {
+            "name": "valuation_rate",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "stock_value",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "reserved_qty_for_production_plan",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "reserved_stock",
+            "type": "Float",
+            "target": null,
+            "required": false
+          }
+        ]
+      }
+    },
+    {
+      "repository": "frappe/erpnext",
+      "ref": "develop",
+      "commit": "ec20fe5ca1375934f12e2ccd51a35eaf19ecf4e0",
+      "path": "erpnext/stock/doctype/stock_ledger_entry/stock_ledger_entry.json",
+      "url": "https://github.com/frappe/erpnext/blob/ec20fe5ca1375934f12e2ccd51a35eaf19ecf4e0/erpnext/stock/doctype/stock_ledger_entry/stock_ledger_entry.json",
+      "models": {
+        "Stock Ledger Entry": [
+          {
+            "name": "item_code",
+            "type": "Link",
+            "target": "Item",
+            "required": false
+          },
+          {
+            "name": "serial_no",
+            "type": "Long Text",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "batch_no",
+            "type": "Data",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "warehouse",
+            "type": "Link",
+            "target": "Warehouse",
+            "required": false
+          },
+          {
+            "name": "posting_date",
+            "type": "Date",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "posting_time",
+            "type": "Time",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "voucher_type",
+            "type": "Link",
+            "target": "DocType",
+            "required": false
+          },
+          {
+            "name": "voucher_no",
+            "type": "Dynamic Link",
+            "target": "voucher_type",
+            "required": false
+          },
+          {
+            "name": "voucher_detail_no",
+            "type": "Data",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "actual_qty",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "incoming_rate",
+            "type": "Currency",
+            "target": "Company:company:default_currency",
+            "required": false
+          },
+          {
+            "name": "outgoing_rate",
+            "type": "Currency",
+            "target": "Company:company:default_currency",
+            "required": false
+          },
+          {
+            "name": "stock_uom",
+            "type": "Link",
+            "target": "UOM",
+            "required": false
+          },
+          {
+            "name": "qty_after_transaction",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "valuation_rate",
+            "type": "Currency",
+            "target": "Company:company:default_currency",
+            "required": false
+          },
+          {
+            "name": "stock_value",
+            "type": "Currency",
+            "target": "Company:company:default_currency",
+            "required": false
+          },
+          {
+            "name": "stock_value_difference",
+            "type": "Currency",
+            "target": "Company:company:default_currency",
+            "required": false
+          },
+          {
+            "name": "stock_queue",
+            "type": "Long Text",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "project",
+            "type": "Link",
+            "target": "Project",
+            "required": false
+          },
+          {
+            "name": "company",
+            "type": "Link",
+            "target": "Company",
+            "required": false
+          },
+          {
+            "name": "fiscal_year",
+            "type": "Data",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "is_cancelled",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "to_rename",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "dependant_sle_voucher_detail_no",
+            "type": "Data",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "recalculate_rate",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "serial_and_batch_bundle",
+            "type": "Link",
+            "target": "Serial and Batch Bundle",
+            "required": false
+          },
+          {
+            "name": "has_batch_no",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "has_serial_no",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "is_adjustment_entry",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "auto_created_serial_and_batch_bundle",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "posting_datetime",
+            "type": "Datetime",
+            "target": null,
+            "required": false
+          }
+        ]
+      }
+    },
+    {
+      "repository": "frappe/erpnext",
+      "ref": "develop",
+      "commit": "ec20fe5ca1375934f12e2ccd51a35eaf19ecf4e0",
+      "path": "erpnext/stock/doctype/stock_entry/stock_entry.json",
+      "url": "https://github.com/frappe/erpnext/blob/ec20fe5ca1375934f12e2ccd51a35eaf19ecf4e0/erpnext/stock/doctype/stock_entry/stock_entry.json",
+      "models": {
+        "Stock Entry": [
+          {
+            "name": "naming_series",
+            "type": "Select",
+            "target": "MAT-STE-.YYYY.-",
+            "required": true
+          },
+          {
+            "name": "stock_entry_type",
+            "type": "Link",
+            "target": "Stock Entry Type",
+            "required": true
+          },
+          {
+            "name": "weight_per_piece",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "outgoing_stock_entry",
+            "type": "Link",
+            "target": "Stock Entry",
+            "required": false
+          },
+          {
+            "name": "source_stock_entry",
+            "type": "Link",
+            "target": "Stock Entry",
+            "required": false
+          },
+          {
+            "name": "purpose",
+            "type": "Select",
+            "target": "Material Issue\nMaterial Receipt\nMaterial Transfer\nMaterial Transfer for Manufacture\nMaterial Consumption for Manufacture\nManufacture\nRepack\nSend to Subcontractor\nDisassemble\nReceive from Customer\nReturn Raw Material to Customer\nSubcontracting Delivery\nSubcontracting Return",
+            "required": false
+          },
+          {
+            "name": "company",
+            "type": "Link",
+            "target": "Company",
+            "required": true
+          },
+          {
+            "name": "work_order",
+            "type": "Link",
+            "target": "Work Order",
+            "required": false
+          },
+          {
+            "name": "is_fg_conversion",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "purchase_order",
+            "type": "Link",
+            "target": "Purchase Order",
+            "required": false
+          },
+          {
+            "name": "subcontracting_order",
+            "type": "Link",
+            "target": "Subcontracting Order",
+            "required": false
+          },
+          {
+            "name": "delivery_note_no",
+            "type": "Link",
+            "target": "Delivery Note",
+            "required": false
+          },
+          {
+            "name": "sales_invoice_no",
+            "type": "Link",
+            "target": "Sales Invoice",
+            "required": false
+          },
+          {
+            "name": "purchase_receipt_no",
+            "type": "Link",
+            "target": "Purchase Receipt",
+            "required": false
+          },
+          {
+            "name": "posting_date",
+            "type": "Date",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "posting_time",
+            "type": "Time",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "set_posting_time",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "inspection_required",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "from_bom",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "bom_no",
+            "type": "Link",
+            "target": "BOM",
+            "required": false
+          },
+          {
+            "name": "fg_completed_qty",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "use_multi_level_bom",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "from_warehouse",
+            "type": "Link",
+            "target": "Warehouse",
+            "required": false
+          },
+          {
+            "name": "source_warehouse_address",
+            "type": "Link",
+            "target": "Address",
+            "required": false
+          },
+          {
+            "name": "source_address_display",
+            "type": "Text Editor",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "to_warehouse",
+            "type": "Link",
+            "target": "Warehouse",
+            "required": false
+          },
+          {
+            "name": "target_warehouse_address",
+            "type": "Link",
+            "target": "Address",
+            "required": false
+          },
+          {
+            "name": "target_address_display",
+            "type": "Text Editor",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "scan_barcode",
+            "type": "Data",
+            "target": "Barcode",
+            "required": false
+          },
+          {
+            "name": "items",
+            "type": "Table",
+            "target": "Stock Entry Detail",
+            "required": true
+          },
+          {
+            "name": "total_incoming_value",
+            "type": "Currency",
+            "target": "Company:company:default_currency",
+            "required": false
+          },
+          {
+            "name": "total_outgoing_value",
+            "type": "Currency",
+            "target": "Company:company:default_currency",
+            "required": false
+          },
+          {
+            "name": "value_difference",
+            "type": "Currency",
+            "target": "Company:company:default_currency",
+            "required": false
+          },
+          {
+            "name": "additional_costs",
+            "type": "Table",
+            "target": "Landed Cost Taxes and Charges",
+            "required": false
+          },
+          {
+            "name": "total_additional_costs",
+            "type": "Currency",
+            "target": "Company:company:default_currency",
+            "required": false
+          },
+          {
+            "name": "supplier",
+            "type": "Link",
+            "target": "Supplier",
+            "required": false
+          },
+          {
+            "name": "supplier_name",
+            "type": "Data",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "supplier_address",
+            "type": "Link",
+            "target": "Address",
+            "required": false
+          },
+          {
+            "name": "address_display",
+            "type": "Text Editor",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "select_print_heading",
+            "type": "Link",
+            "target": "Print Heading",
+            "required": false
+          },
+          {
+            "name": "letter_head",
+            "type": "Link",
+            "target": "Letter Head",
+            "required": false
+          },
+          {
+            "name": "is_opening",
+            "type": "Select",
+            "target": "No\nYes",
+            "required": false
+          },
+          {
+            "name": "project",
+            "type": "Link",
+            "target": "Project",
+            "required": false
+          },
+          {
+            "name": "remarks",
+            "type": "Text",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "per_transferred",
+            "type": "Percent",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "total_amount",
+            "type": "Currency",
+            "target": "Company:company:default_currency",
+            "required": false
+          },
+          {
+            "name": "job_card",
+            "type": "Link",
+            "target": "Job Card",
+            "required": false
+          },
+          {
+            "name": "amended_from",
+            "type": "Link",
+            "target": "Stock Entry",
+            "required": false
+          },
+          {
+            "name": "credit_note",
+            "type": "Link",
+            "target": "Journal Entry",
+            "required": false
+          },
+          {
+            "name": "pick_list",
+            "type": "Link",
+            "target": "Pick List",
+            "required": false
+          },
+          {
+            "name": "add_to_transit",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "apply_putaway_rule",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "is_return",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "process_loss_qty",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "process_loss_percentage",
+            "type": "Percent",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "asset_repair",
+            "type": "Link",
+            "target": "Asset Repair",
+            "required": false
+          },
+          {
+            "name": "last_scanned_warehouse",
+            "type": "Data",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "is_additional_transfer_entry",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "subcontracting_inward_order",
+            "type": "Link",
+            "target": "Subcontracting Inward Order",
+            "required": false
+          },
+          {
+            "name": "cost_center",
+            "type": "Link",
+            "target": "Cost Center",
+            "required": false
+          }
+        ]
+      }
+    },
+    {
+      "repository": "frappe/erpnext",
+      "ref": "develop",
+      "commit": "ec20fe5ca1375934f12e2ccd51a35eaf19ecf4e0",
+      "path": "erpnext/stock/doctype/stock_entry_detail/stock_entry_detail.json",
+      "url": "https://github.com/frappe/erpnext/blob/ec20fe5ca1375934f12e2ccd51a35eaf19ecf4e0/erpnext/stock/doctype/stock_entry_detail/stock_entry_detail.json",
+      "models": {
+        "Stock Entry Detail": [
+          {
+            "name": "barcode",
+            "type": "Data",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "s_warehouse",
+            "type": "Link",
+            "target": "Warehouse",
+            "required": false
+          },
+          {
+            "name": "t_warehouse",
+            "type": "Link",
+            "target": "Warehouse",
+            "required": false
+          },
+          {
+            "name": "item_code",
+            "type": "Link",
+            "target": "Item",
+            "required": true
+          },
+          {
+            "name": "item_name",
+            "type": "Data",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "description",
+            "type": "Text Editor",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "image",
+            "type": "Attach",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "image_view",
+            "type": "Image",
+            "target": "image",
+            "required": false
+          },
+          {
+            "name": "qty",
+            "type": "Float",
+            "target": null,
+            "required": true
+          },
+          {
+            "name": "basic_rate",
+            "type": "Currency",
+            "target": "Company:company:default_currency",
+            "required": false
+          },
+          {
+            "name": "basic_amount",
+            "type": "Currency",
+            "target": "Company:company:default_currency",
+            "required": false
+          },
+          {
+            "name": "additional_cost",
+            "type": "Currency",
+            "target": "Company:company:default_currency",
+            "required": false
+          },
+          {
+            "name": "amount",
+            "type": "Currency",
+            "target": "Company:company:default_currency",
+            "required": false
+          },
+          {
+            "name": "valuation_rate",
+            "type": "Currency",
+            "target": "Company:company:default_currency",
+            "required": false
+          },
+          {
+            "name": "uom",
+            "type": "Link",
+            "target": "UOM",
+            "required": true
+          },
+          {
+            "name": "conversion_factor",
+            "type": "Float",
+            "target": null,
+            "required": true
+          },
+          {
+            "name": "stock_uom",
+            "type": "Link",
+            "target": "UOM",
+            "required": true
+          },
+          {
+            "name": "transfer_qty",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "retain_sample",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "sample_quantity",
+            "type": "Int",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "serial_no",
+            "type": "Text",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "batch_no",
+            "type": "Link",
+            "target": "Batch",
+            "required": false
+          },
+          {
+            "name": "quality_inspection",
+            "type": "Link",
+            "target": "Quality Inspection",
+            "required": false
+          },
+          {
+            "name": "expense_account",
+            "type": "Link",
+            "target": "Account",
+            "required": false
+          },
+          {
+            "name": "cost_center",
+            "type": "Link",
+            "target": "Cost Center",
+            "required": false
+          },
+          {
+            "name": "allow_zero_valuation_rate",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "actual_qty",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "bom_no",
+            "type": "Link",
+            "target": "BOM",
+            "required": false
+          },
+          {
+            "name": "allow_alternative_item",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "material_request",
+            "type": "Link",
+            "target": "Material Request",
+            "required": false
+          },
+          {
+            "name": "material_request_item",
+            "type": "Link",
+            "target": "Material Request Item",
+            "required": false
+          },
+          {
+            "name": "pick_list_item",
+            "type": "Link",
+            "target": "Pick List Item",
+            "required": false
+          },
+          {
+            "name": "original_item",
+            "type": "Link",
+            "target": "Item",
+            "required": false
+          },
+          {
+            "name": "subcontracted_item",
+            "type": "Link",
+            "target": "Item",
+            "required": false
+          },
+          {
+            "name": "against_stock_entry",
+            "type": "Link",
+            "target": "Stock Entry",
+            "required": false
+          },
+          {
+            "name": "ste_detail",
+            "type": "Data",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "transferred_qty",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "item_group",
+            "type": "Data",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "reference_purchase_receipt",
+            "type": "Link",
+            "target": "Purchase Receipt",
+            "required": false
+          },
+          {
+            "name": "project",
+            "type": "Link",
+            "target": "Project",
+            "required": false
+          },
+          {
+            "name": "po_detail",
+            "type": "Data",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "sco_rm_detail",
+            "type": "Data",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "set_basic_rate_manually",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "putaway_rule",
+            "type": "Link",
+            "target": "Putaway Rule",
+            "required": false
+          },
+          {
+            "name": "is_finished_item",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "job_card_item",
+            "type": "Data",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "has_item_scanned",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "serial_and_batch_bundle",
+            "type": "Link",
+            "target": "Serial and Batch Bundle",
+            "required": false
+          },
+          {
+            "name": "use_serial_batch_fields",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "landed_cost_voucher_amount",
+            "type": "Currency",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "customer_provided_item_cost",
+            "type": "Currency",
+            "target": "Company:company:default_currency",
+            "required": false
+          },
+          {
+            "name": "scio_detail",
+            "type": "Data",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "against_fg",
+            "type": "Link",
+            "target": "Subcontracting Inward Order Item",
+            "required": false
+          },
+          {
+            "name": "secondary_item_type",
+            "type": "Select",
+            "target": "\nCo-Product\nBy-Product\nScrap\nAdditional Finished Good",
+            "required": false
+          },
+          {
+            "name": "bom_secondary_item",
+            "type": "Data",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "valuation_type",
+            "type": "Select",
+            "target": "\nValuation Rate\n% of Component Cost\nManual",
+            "required": false
+          }
+        ]
+      }
+    },
+    {
+      "repository": "frappe/erpnext",
+      "ref": "develop",
+      "commit": "ec20fe5ca1375934f12e2ccd51a35eaf19ecf4e0",
+      "path": "erpnext/stock/doctype/batch/batch.json",
+      "url": "https://github.com/frappe/erpnext/blob/ec20fe5ca1375934f12e2ccd51a35eaf19ecf4e0/erpnext/stock/doctype/batch/batch.json",
+      "models": {
+        "Batch": [
+          {
+            "name": "disabled",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "batch_id",
+            "type": "Data",
+            "target": null,
+            "required": true
+          },
+          {
+            "name": "item",
+            "type": "Link",
+            "target": "Item",
+            "required": true
+          },
+          {
+            "name": "image",
+            "type": "Attach Image",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "parent_batch",
+            "type": "Link",
+            "target": "Batch",
+            "required": false
+          },
+          {
+            "name": "manufacturing_date",
+            "type": "Date",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "expiry_date",
+            "type": "Date",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "supplier",
+            "type": "Link",
+            "target": "Supplier",
+            "required": false
+          },
+          {
+            "name": "reference_doctype",
+            "type": "Link",
+            "target": "DocType",
+            "required": false
+          },
+          {
+            "name": "reference_name",
+            "type": "Dynamic Link",
+            "target": "reference_doctype",
+            "required": false
+          },
+          {
+            "name": "description",
+            "type": "Small Text",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "item_name",
+            "type": "Data",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "batch_qty",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "stock_uom",
+            "type": "Link",
+            "target": "UOM",
+            "required": false
+          },
+          {
+            "name": "qty_to_produce",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "produced_qty",
+            "type": "Float",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "use_batchwise_valuation",
+            "type": "Check",
+            "target": null,
+            "required": false
+          },
+          {
+            "name": "allow_negative_stock_for_batch",
+            "type": "Check",
+            "target": null,
+            "required": false
+          }
+        ]
+      }
+    },
+    {
+      "repository": "frappe/erpnext",
+      "ref": "develop",
+      "commit": "ec20fe5ca1375934f12e2ccd51a35eaf19ecf4e0",
+      "path": "erpnext/stock/doctype/item_supplier/item_supplier.json",
+      "url": "https://github.com/frappe/erpnext/blob/ec20fe5ca1375934f12e2ccd51a35eaf19ecf4e0/erpnext/stock/doctype/item_supplier/item_supplier.json",
+      "models": {
+        "Item Supplier": [
+          {
+            "name": "supplier",
+            "type": "Link",
+            "target": "Supplier",
+            "required": true
+          },
+          {
+            "name": "supplier_part_no",
+            "type": "Data",
+            "target": null,
+            "required": false
+          }
+        ]
+      }
+    },
+    {
+      "repository": "odoo/odoo",
+      "ref": "18.0",
+      "commit": "0589e24259d971b8331c1b2ed960264a0d072b40",
+      "path": "addons/stock/models/stock_move.py",
+      "url": "https://github.com/odoo/odoo/blob/0589e24259d971b8331c1b2ed960264a0d072b40/addons/stock/models/stock_move.py",
+      "models": {
+        "StockMove": [
+          {
+            "name": "name",
+            "type": "fields.Char",
+            "target": "Description"
+          },
+          {
+            "name": "sequence",
+            "type": "fields.Integer",
+            "target": "Sequence"
+          },
+          {
+            "name": "priority",
+            "type": "fields.Selection",
+            "target": null
+          },
+          {
+            "name": "date",
+            "type": "fields.Datetime",
+            "target": "Date Scheduled"
+          },
+          {
+            "name": "date_deadline",
+            "type": "fields.Datetime",
+            "target": "Deadline"
+          },
+          {
+            "name": "company_id",
+            "type": "fields.Many2one",
+            "target": "res.company"
+          },
+          {
+            "name": "product_id",
+            "type": "fields.Many2one",
+            "target": "product.product"
+          },
+          {
+            "name": "never_product_template_attribute_value_ids",
+            "type": "fields.Many2many",
+            "target": "product.template.attribute.value"
+          },
+          {
+            "name": "description_picking",
+            "type": "fields.Text",
+            "target": "Description of Picking"
+          },
+          {
+            "name": "product_qty",
+            "type": "fields.Float",
+            "target": "Real Quantity"
+          },
+          {
+            "name": "product_uom_qty",
+            "type": "fields.Float",
+            "target": "Demand"
+          },
+          {
+            "name": "product_uom",
+            "type": "fields.Many2one",
+            "target": "uom.uom"
+          },
+          {
+            "name": "product_uom_category_id",
+            "type": "fields.Many2one",
+            "target": null
+          },
+          {
+            "name": "product_tmpl_id",
+            "type": "fields.Many2one",
+            "target": "product.template"
+          },
+          {
+            "name": "location_id",
+            "type": "fields.Many2one",
+            "target": "stock.location"
+          },
+          {
+            "name": "location_dest_id",
+            "type": "fields.Many2one",
+            "target": "stock.location"
+          },
+          {
+            "name": "location_final_id",
+            "type": "fields.Many2one",
+            "target": "stock.location"
+          },
+          {
+            "name": "location_usage",
+            "type": "fields.Selection",
+            "target": null
+          },
+          {
+            "name": "location_dest_usage",
+            "type": "fields.Selection",
+            "target": null
+          },
+          {
+            "name": "partner_id",
+            "type": "fields.Many2one",
+            "target": "res.partner"
+          },
+          {
+            "name": "move_dest_ids",
+            "type": "fields.Many2many",
+            "target": "stock.move"
+          },
+          {
+            "name": "move_orig_ids",
+            "type": "fields.Many2many",
+            "target": "stock.move"
+          },
+          {
+            "name": "picking_id",
+            "type": "fields.Many2one",
+            "target": "stock.picking"
+          },
+          {
+            "name": "state",
+            "type": "fields.Selection",
+            "target": null
+          },
+          {
+            "name": "picked",
+            "type": "fields.Boolean",
+            "target": "Picked"
+          },
+          {
+            "name": "price_unit",
+            "type": "fields.Float",
+            "target": "Unit Price"
+          },
+          {
+            "name": "origin",
+            "type": "fields.Char",
+            "target": "Source Document"
+          },
+          {
+            "name": "procure_method",
+            "type": "fields.Selection",
+            "target": null
+          },
+          {
+            "name": "scrapped",
+            "type": "fields.Boolean",
+            "target": "Scrapped"
+          },
+          {
+            "name": "scrap_id",
+            "type": "fields.Many2one",
+            "target": "stock.scrap"
+          },
+          {
+            "name": "group_id",
+            "type": "fields.Many2one",
+            "target": "procurement.group"
+          },
+          {
+            "name": "rule_id",
+            "type": "fields.Many2one",
+            "target": "stock.rule"
+          },
+          {
+            "name": "propagate_cancel",
+            "type": "fields.Boolean",
+            "target": "Propagate cancel and split"
+          },
+          {
+            "name": "delay_alert_date",
+            "type": "fields.Datetime",
+            "target": "Delay Alert Date"
+          },
+          {
+            "name": "picking_type_id",
+            "type": "fields.Many2one",
+            "target": "stock.picking.type"
+          },
+          {
+            "name": "is_inventory",
+            "type": "fields.Boolean",
+            "target": "Inventory"
+          },
+          {
+            "name": "move_line_ids",
+            "type": "fields.One2many",
+            "target": "stock.move.line"
+          },
+          {
+            "name": "origin_returned_move_id",
+            "type": "fields.Many2one",
+            "target": "stock.move"
+          },
+          {
+            "name": "returned_move_ids",
+            "type": "fields.One2many",
+            "target": "stock.move"
+          },
+          {
+            "name": "availability",
+            "type": "fields.Float",
+            "target": "Forecasted Quantity"
+          },
+          {
+            "name": "restrict_partner_id",
+            "type": "fields.Many2one",
+            "target": "res.partner"
+          },
+          {
+            "name": "route_ids",
+            "type": "fields.Many2many",
+            "target": "stock.route"
+          },
+          {
+            "name": "warehouse_id",
+            "type": "fields.Many2one",
+            "target": "stock.warehouse"
+          },
+          {
+            "name": "has_tracking",
+            "type": "fields.Selection",
+            "target": null
+          },
+          {
+            "name": "quantity",
+            "type": "fields.Float",
+            "target": "Quantity"
+          },
+          {
+            "name": "show_operations",
+            "type": "fields.Boolean",
+            "target": null
+          },
+          {
+            "name": "picking_code",
+            "type": "fields.Selection",
+            "target": null
+          },
+          {
+            "name": "show_details_visible",
+            "type": "fields.Boolean",
+            "target": "Details Visible"
+          },
+          {
+            "name": "is_storable",
+            "type": "fields.Boolean",
+            "target": null
+          },
+          {
+            "name": "additional",
+            "type": "fields.Boolean",
+            "target": "Whether the move was added after the picking's confirmation"
+          },
+          {
+            "name": "is_locked",
+            "type": "fields.Boolean",
+            "target": null
+          },
+          {
+            "name": "is_initial_demand_editable",
+            "type": "fields.Boolean",
+            "target": "Is initial demand editable"
+          },
+          {
+            "name": "is_quantity_done_editable",
+            "type": "fields.Boolean",
+            "target": "Is quantity done editable"
+          },
+          {
+            "name": "reference",
+            "type": "fields.Char",
+            "target": null
+          },
+          {
+            "name": "move_lines_count",
+            "type": "fields.Integer",
+            "target": null
+          },
+          {
+            "name": "package_level_id",
+            "type": "fields.Many2one",
+            "target": "stock.package_level"
+          },
+          {
+            "name": "picking_type_entire_packs",
+            "type": "fields.Boolean",
+            "target": null
+          },
+          {
+            "name": "display_assign_serial",
+            "type": "fields.Boolean",
+            "target": null
+          },
+          {
+            "name": "display_import_lot",
+            "type": "fields.Boolean",
+            "target": null
+          },
+          {
+            "name": "next_serial",
+            "type": "fields.Char",
+            "target": "First SN/Lot"
+          },
+          {
+            "name": "next_serial_count",
+            "type": "fields.Integer",
+            "target": "Number of SN/Lots"
+          },
+          {
+            "name": "orderpoint_id",
+            "type": "fields.Many2one",
+            "target": "stock.warehouse.orderpoint"
+          },
+          {
+            "name": "forecast_availability",
+            "type": "fields.Float",
+            "target": "Forecast Availability"
+          },
+          {
+            "name": "forecast_expected_date",
+            "type": "fields.Datetime",
+            "target": "Forecasted Expected date"
+          },
+          {
+            "name": "lot_ids",
+            "type": "fields.Many2many",
+            "target": "stock.lot"
+          },
+          {
+            "name": "reservation_date",
+            "type": "fields.Date",
+            "target": "Date to Reserve"
+          },
+          {
+            "name": "product_packaging_id",
+            "type": "fields.Many2one",
+            "target": "product.packaging"
+          },
+          {
+            "name": "product_packaging_qty",
+            "type": "fields.Float",
+            "target": null
+          },
+          {
+            "name": "product_packaging_quantity",
+            "type": "fields.Float",
+            "target": null
+          },
+          {
+            "name": "show_quant",
+            "type": "fields.Boolean",
+            "target": "Show Quant"
+          },
+          {
+            "name": "show_lots_m2o",
+            "type": "fields.Boolean",
+            "target": "Show lot_id"
+          },
+          {
+            "name": "show_lots_text",
+            "type": "fields.Boolean",
+            "target": "Show lot_name"
+          }
+        ]
+      }
+    },
+    {
+      "repository": "odoo/odoo",
+      "ref": "18.0",
+      "commit": "0589e24259d971b8331c1b2ed960264a0d072b40",
+      "path": "addons/stock/models/stock_move_line.py",
+      "url": "https://github.com/odoo/odoo/blob/0589e24259d971b8331c1b2ed960264a0d072b40/addons/stock/models/stock_move_line.py",
+      "models": {
+        "StockMoveLine": [
+          {
+            "name": "picking_id",
+            "type": "fields.Many2one",
+            "target": "stock.picking"
+          },
+          {
+            "name": "move_id",
+            "type": "fields.Many2one",
+            "target": "stock.move"
+          },
+          {
+            "name": "company_id",
+            "type": "fields.Many2one",
+            "target": "res.company"
+          },
+          {
+            "name": "product_id",
+            "type": "fields.Many2one",
+            "target": "product.product"
+          },
+          {
+            "name": "product_uom_id",
+            "type": "fields.Many2one",
+            "target": "uom.uom"
+          },
+          {
+            "name": "product_uom_category_id",
+            "type": "fields.Many2one",
+            "target": null
+          },
+          {
+            "name": "product_category_name",
+            "type": "fields.Char",
+            "target": null
+          },
+          {
+            "name": "quantity",
+            "type": "fields.Float",
+            "target": "Quantity"
+          },
+          {
+            "name": "quantity_product_uom",
+            "type": "fields.Float",
+            "target": "Quantity in Product UoM"
+          },
+          {
+            "name": "picked",
+            "type": "fields.Boolean",
+            "target": "Picked"
+          },
+          {
+            "name": "package_id",
+            "type": "fields.Many2one",
+            "target": "stock.quant.package"
+          },
+          {
+            "name": "package_level_id",
+            "type": "fields.Many2one",
+            "target": "stock.package_level"
+          },
+          {
+            "name": "lot_id",
+            "type": "fields.Many2one",
+            "target": "stock.lot"
+          },
+          {
+            "name": "lot_name",
+            "type": "fields.Char",
+            "target": "Lot/Serial Number Name"
+          },
+          {
+            "name": "result_package_id",
+            "type": "fields.Many2one",
+            "target": "stock.quant.package"
+          },
+          {
+            "name": "date",
+            "type": "fields.Datetime",
+            "target": "Date"
+          },
+          {
+            "name": "scheduled_date",
+            "type": "fields.Datetime",
+            "target": "Scheduled Date"
+          },
+          {
+            "name": "owner_id",
+            "type": "fields.Many2one",
+            "target": "res.partner"
+          },
+          {
+            "name": "location_id",
+            "type": "fields.Many2one",
+            "target": "stock.location"
+          },
+          {
+            "name": "location_dest_id",
+            "type": "fields.Many2one",
+            "target": "stock.location"
+          },
+          {
+            "name": "location_usage",
+            "type": "fields.Selection",
+            "target": null
+          },
+          {
+            "name": "location_dest_usage",
+            "type": "fields.Selection",
+            "target": null
+          },
+          {
+            "name": "lots_visible",
+            "type": "fields.Boolean",
+            "target": null
+          },
+          {
+            "name": "picking_partner_id",
+            "type": "fields.Many2one",
+            "target": null
+          },
+          {
+            "name": "picking_code",
+            "type": "fields.Selection",
+            "target": null
+          },
+          {
+            "name": "picking_type_id",
+            "type": "fields.Many2one",
+            "target": "stock.picking.type"
+          },
+          {
+            "name": "picking_type_use_create_lots",
+            "type": "fields.Boolean",
+            "target": null
+          },
+          {
+            "name": "picking_type_use_existing_lots",
+            "type": "fields.Boolean",
+            "target": null
+          },
+          {
+            "name": "picking_type_entire_packs",
+            "type": "fields.Boolean",
+            "target": null
+          },
+          {
+            "name": "state",
+            "type": "fields.Selection",
+            "target": null
+          },
+          {
+            "name": "is_inventory",
+            "type": "fields.Boolean",
+            "target": null
+          },
+          {
+            "name": "is_locked",
+            "type": "fields.Boolean",
+            "target": null
+          },
+          {
+            "name": "consume_line_ids",
+            "type": "fields.Many2many",
+            "target": "stock.move.line"
+          },
+          {
+            "name": "produce_line_ids",
+            "type": "fields.Many2many",
+            "target": "stock.move.line"
+          },
+          {
+            "name": "reference",
+            "type": "fields.Char",
+            "target": null
+          },
+          {
+            "name": "tracking",
+            "type": "fields.Selection",
+            "target": null
+          },
+          {
+            "name": "origin",
+            "type": "fields.Char",
+            "target": null
+          },
+          {
+            "name": "description_picking",
+            "type": "fields.Text",
+            "target": null
+          },
+          {
+            "name": "quant_id",
+            "type": "fields.Many2one",
+            "target": "stock.quant"
+          },
+          {
+            "name": "product_packaging_qty",
+            "type": "fields.Float",
+            "target": null
+          },
+          {
+            "name": "picking_location_id",
+            "type": "fields.Many2one",
+            "target": null
+          },
+          {
+            "name": "picking_location_dest_id",
+            "type": "fields.Many2one",
+            "target": null
+          }
+        ]
+      }
+    },
+    {
+      "repository": "odoo/odoo",
+      "ref": "18.0",
+      "commit": "0589e24259d971b8331c1b2ed960264a0d072b40",
+      "path": "addons/stock/models/stock_quant.py",
+      "url": "https://github.com/odoo/odoo/blob/0589e24259d971b8331c1b2ed960264a0d072b40/addons/stock/models/stock_quant.py",
+      "models": {
+        "StockQuant": [
+          {
+            "name": "product_id",
+            "type": "fields.Many2one",
+            "target": "product.product"
+          },
+          {
+            "name": "product_tmpl_id",
+            "type": "fields.Many2one",
+            "target": "product.template"
+          },
+          {
+            "name": "product_uom_id",
+            "type": "fields.Many2one",
+            "target": "uom.uom"
+          },
+          {
+            "name": "is_favorite",
+            "type": "fields.Boolean",
+            "target": null
+          },
+          {
+            "name": "company_id",
+            "type": "fields.Many2one",
+            "target": null
+          },
+          {
+            "name": "location_id",
+            "type": "fields.Many2one",
+            "target": "stock.location"
+          },
+          {
+            "name": "warehouse_id",
+            "type": "fields.Many2one",
+            "target": "stock.warehouse"
+          },
+          {
+            "name": "storage_category_id",
+            "type": "fields.Many2one",
+            "target": null
+          },
+          {
+            "name": "cyclic_inventory_frequency",
+            "type": "fields.Integer",
+            "target": null
+          },
+          {
+            "name": "lot_id",
+            "type": "fields.Many2one",
+            "target": "stock.lot"
+          },
+          {
+            "name": "lot_properties",
+            "type": "fields.Properties",
+            "target": null
+          },
+          {
+            "name": "sn_duplicated",
+            "type": "fields.Boolean",
+            "target": null
+          },
+          {
+            "name": "package_id",
+            "type": "fields.Many2one",
+            "target": "stock.quant.package"
+          },
+          {
+            "name": "owner_id",
+            "type": "fields.Many2one",
+            "target": "res.partner"
+          },
+          {
+            "name": "quantity",
+            "type": "fields.Float",
+            "target": "Quantity"
+          },
+          {
+            "name": "reserved_quantity",
+            "type": "fields.Float",
+            "target": "Reserved Quantity"
+          },
+          {
+            "name": "available_quantity",
+            "type": "fields.Float",
+            "target": "Available Quantity"
+          },
+          {
+            "name": "in_date",
+            "type": "fields.Datetime",
+            "target": "Incoming Date"
+          },
+          {
+            "name": "tracking",
+            "type": "fields.Selection",
+            "target": null
+          },
+          {
+            "name": "on_hand",
+            "type": "fields.Boolean",
+            "target": "On Hand"
+          },
+          {
+            "name": "product_categ_id",
+            "type": "fields.Many2one",
+            "target": null
+          },
+          {
+            "name": "inventory_quantity",
+            "type": "fields.Float",
+            "target": "Counted Quantity"
+          },
+          {
+            "name": "inventory_quantity_auto_apply",
+            "type": "fields.Float",
+            "target": "Inventoried Quantity"
+          },
+          {
+            "name": "inventory_diff_quantity",
+            "type": "fields.Float",
+            "target": "Difference"
+          },
+          {
+            "name": "inventory_date",
+            "type": "fields.Date",
+            "target": "Scheduled Date"
+          },
+          {
+            "name": "last_count_date",
+            "type": "fields.Date",
+            "target": null
+          },
+          {
+            "name": "inventory_quantity_set",
+            "type": "fields.Boolean",
+            "target": null
+          },
+          {
+            "name": "is_outdated",
+            "type": "fields.Boolean",
+            "target": "Quantity has been moved since last count"
+          },
+          {
+            "name": "user_id",
+            "type": "fields.Many2one",
+            "target": "res.users"
+          }
+        ],
+        "QuantPackage": [
+          {
+            "name": "name",
+            "type": "fields.Char",
+            "target": "Package Reference"
+          },
+          {
+            "name": "quant_ids",
+            "type": "fields.One2many",
+            "target": "stock.quant"
+          },
+          {
+            "name": "package_type_id",
+            "type": "fields.Many2one",
+            "target": "stock.package.type"
+          },
+          {
+            "name": "location_id",
+            "type": "fields.Many2one",
+            "target": "stock.location"
+          },
+          {
+            "name": "company_id",
+            "type": "fields.Many2one",
+            "target": "res.company"
+          },
+          {
+            "name": "owner_id",
+            "type": "fields.Many2one",
+            "target": "res.partner"
+          },
+          {
+            "name": "package_use",
+            "type": "fields.Selection",
+            "target": null
+          },
+          {
+            "name": "shipping_weight",
+            "type": "fields.Float",
+            "target": null
+          },
+          {
+            "name": "valid_sscc",
+            "type": "fields.Boolean",
+            "target": "Package name is valid SSCC"
+          },
+          {
+            "name": "pack_date",
+            "type": "fields.Date",
+            "target": "Pack Date"
+          }
+        ]
+      }
+    },
+    {
+      "repository": "inventree/InvenTree",
+      "ref": "master",
+      "commit": "c1683db7146b17ba1369e0845f08f8c69dd4b1cb",
+      "path": "src/backend/InvenTree/stock/models.py",
+      "url": "https://github.com/inventree/InvenTree/blob/c1683db7146b17ba1369e0845f08f8c69dd4b1cb/src/backend/InvenTree/stock/models.py",
+      "models": {
+        "StockLocationType": [
+          {
+            "name": "name",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "description",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "icon",
+            "type": "models.CharField",
+            "target": null
+          }
+        ],
+        "StockLocation": [
+          {
+            "name": "custom_icon",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "owner",
+            "type": "models.ForeignKey",
+            "target": null
+          },
+          {
+            "name": "structural",
+            "type": "models.BooleanField",
+            "target": null
+          },
+          {
+            "name": "external",
+            "type": "models.BooleanField",
+            "target": null
+          },
+          {
+            "name": "location_type",
+            "type": "models.ForeignKey",
+            "target": null
+          }
+        ],
+        "StockItem": [
+          {
+            "name": "parent",
+            "type": "models.ForeignKey",
+            "target": "stock.StockItem"
+          },
+          {
+            "name": "part",
+            "type": "models.ForeignKey",
+            "target": "part.Part"
+          },
+          {
+            "name": "supplier_part",
+            "type": "models.ForeignKey",
+            "target": "company.SupplierPart"
+          },
+          {
+            "name": "packaging",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "belongs_to",
+            "type": "models.ForeignKey",
+            "target": "self"
+          },
+          {
+            "name": "customer",
+            "type": "models.ForeignKey",
+            "target": null
+          },
+          {
+            "name": "serial",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "serial_int",
+            "type": "models.IntegerField",
+            "target": null
+          },
+          {
+            "name": "batch",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "quantity",
+            "type": "models.DecimalField",
+            "target": null
+          },
+          {
+            "name": "build",
+            "type": "models.ForeignKey",
+            "target": "build.Build"
+          },
+          {
+            "name": "consumed_by",
+            "type": "models.ForeignKey",
+            "target": "build.Build"
+          },
+          {
+            "name": "is_building",
+            "type": "models.BooleanField",
+            "target": null
+          },
+          {
+            "name": "purchase_order",
+            "type": "models.ForeignKey",
+            "target": "order.PurchaseOrder"
+          },
+          {
+            "name": "sales_order",
+            "type": "models.ForeignKey",
+            "target": "order.SalesOrder"
+          },
+          {
+            "name": "expiry_date",
+            "type": "models.DateField",
+            "target": null
+          },
+          {
+            "name": "stocktake_date",
+            "type": "models.DateField",
+            "target": null
+          },
+          {
+            "name": "stocktake_user",
+            "type": "models.ForeignKey",
+            "target": null
+          },
+          {
+            "name": "creation_date",
+            "type": "models.DateTimeField",
+            "target": null
+          },
+          {
+            "name": "delete_on_deplete",
+            "type": "models.BooleanField",
+            "target": null
+          },
+          {
+            "name": "owner",
+            "type": "models.ForeignKey",
+            "target": null
+          }
+        ],
+        "StockItemTestResult": [
+          {
+            "name": "stock_item",
+            "type": "models.ForeignKey",
+            "target": null
+          },
+          {
+            "name": "template",
+            "type": "models.ForeignKey",
+            "target": "part.parttesttemplate"
+          },
+          {
+            "name": "result",
+            "type": "models.BooleanField",
+            "target": null
+          },
+          {
+            "name": "value",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "attachment",
+            "type": "models.FileField",
+            "target": null
+          },
+          {
+            "name": "notes",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "user",
+            "type": "models.ForeignKey",
+            "target": null
+          },
+          {
+            "name": "test_station",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "started_datetime",
+            "type": "models.DateTimeField",
+            "target": null
+          },
+          {
+            "name": "finished_datetime",
+            "type": "models.DateTimeField",
+            "target": null
+          },
+          {
+            "name": "date",
+            "type": "models.DateTimeField",
+            "target": null
+          }
+        ]
+      }
+    },
+    {
+      "repository": "inventree/InvenTree",
+      "ref": "master",
+      "commit": "c1683db7146b17ba1369e0845f08f8c69dd4b1cb",
+      "path": "src/backend/InvenTree/company/models.py",
+      "url": "https://github.com/inventree/InvenTree/blob/c1683db7146b17ba1369e0845f08f8c69dd4b1cb/src/backend/InvenTree/company/models.py",
+      "models": {
+        "Company": [
+          {
+            "name": "name",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "description",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "phone",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "email",
+            "type": "models.EmailField",
+            "target": null
+          },
+          {
+            "name": "contact",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "active",
+            "type": "models.BooleanField",
+            "target": null
+          },
+          {
+            "name": "is_customer",
+            "type": "models.BooleanField",
+            "target": null
+          },
+          {
+            "name": "is_supplier",
+            "type": "models.BooleanField",
+            "target": null
+          },
+          {
+            "name": "is_manufacturer",
+            "type": "models.BooleanField",
+            "target": null
+          },
+          {
+            "name": "is_internal",
+            "type": "models.BooleanField",
+            "target": null
+          },
+          {
+            "name": "currency",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "tax_id",
+            "type": "models.CharField",
+            "target": null
+          }
+        ],
+        "Contact": [
+          {
+            "name": "company",
+            "type": "models.ForeignKey",
+            "target": null
+          },
+          {
+            "name": "name",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "phone",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "email",
+            "type": "models.EmailField",
+            "target": null
+          },
+          {
+            "name": "role",
+            "type": "models.CharField",
+            "target": null
+          }
+        ],
+        "Address": [
+          {
+            "name": "company",
+            "type": "models.ForeignKey",
+            "target": null
+          },
+          {
+            "name": "title",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "primary",
+            "type": "models.BooleanField",
+            "target": null
+          },
+          {
+            "name": "line1",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "line2",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "postal_code",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "postal_city",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "province",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "country",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "phone",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "email",
+            "type": "models.EmailField",
+            "target": null
+          },
+          {
+            "name": "shipping_notes",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "internal_shipping_notes",
+            "type": "models.CharField",
+            "target": null
+          }
+        ],
+        "ManufacturerPart": [
+          {
+            "name": "part",
+            "type": "models.ForeignKey",
+            "target": "part.Part"
+          },
+          {
+            "name": "manufacturer",
+            "type": "models.ForeignKey",
+            "target": null
+          },
+          {
+            "name": "MPN",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "description",
+            "type": "models.CharField",
+            "target": null
+          }
+        ],
+        "SupplierPart": [
+          {
+            "name": "part",
+            "type": "models.ForeignKey",
+            "target": "part.Part"
+          },
+          {
+            "name": "supplier",
+            "type": "models.ForeignKey",
+            "target": null
+          },
+          {
+            "name": "SKU",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "active",
+            "type": "models.BooleanField",
+            "target": null
+          },
+          {
+            "name": "primary",
+            "type": "models.BooleanField",
+            "target": null
+          },
+          {
+            "name": "manufacturer_part",
+            "type": "models.ForeignKey",
+            "target": null
+          },
+          {
+            "name": "description",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "note",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "base_cost",
+            "type": "models.DecimalField",
+            "target": null
+          },
+          {
+            "name": "packaging",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "pack_quantity",
+            "type": "models.CharField",
+            "target": null
+          },
+          {
+            "name": "multiple",
+            "type": "models.PositiveIntegerField",
+            "target": null
+          },
+          {
+            "name": "available",
+            "type": "models.DecimalField",
+            "target": null
+          },
+          {
+            "name": "availability_updated",
+            "type": "models.DateTimeField",
+            "target": null
+          }
+        ],
+        "SupplierPriceBreak": [
+          {
+            "name": "part",
+            "type": "models.ForeignKey",
+            "target": null
+          }
+        ]
+      }
+    }
+  ]
+}
