@@ -17,6 +17,7 @@ SEQUENCE = [
     ('docs/design/table-discussions.md', 'Table discussions'),
     ('docs/design/database-schema.md', 'Database schema proposal'),
     ('docs/design/schema-audit.md', 'Table and column audit'),
+    ('docs/design/table-relationships.md', 'Table relationships'),
     ('docs/design/posting-and-integration.md', 'Posting and ERP integration'),
     ('docs/design/compliance-and-trade.md', 'Compliance and trade design'),
     ('db/README.md', 'Migration workflow'),

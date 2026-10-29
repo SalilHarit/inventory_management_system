@@ -10,6 +10,8 @@ Status: proposals for discussion, not executable table definitions. Use the [sch
 
 The [consolidated audit inventory](schema-audit.md) lists all proposed table/column names, including common identity fields and known inconsistencies. Review the audit findings alongside each table discussion.
 
+Use the [relationship diagrams](table-relationships.md) alongside the column inventory to trace how a proposed table connects to other domains.
+
 ## Discussion 1: organization, actor and organization_actor
 
 Why first: stock, permissions, audit attribution and ERP mappings must agree about which business owns the record and who performed the action.

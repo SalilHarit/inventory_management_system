@@ -19,6 +19,7 @@ Follow the **Previous** and **Next** links at the top or bottom of each page to 
 ## Database design and review
 
 - [Table and column audit](design/schema-audit.md) — consolidated proposed names and open audit findings.
+- [Table relationships](design/table-relationships.md) — Mermaid diagrams grouped by domain.
 - [Table discussion queue](design/table-discussions.md) — suggested order and questions for reviewing tables.
 - [PostgreSQL schema proposal](design/database-schema.md) — the core table dictionary and constraints.
 - [Compliance and trade design](design/compliance-and-trade.md) — independent holds, shipment evidence, and cross-border provenance.

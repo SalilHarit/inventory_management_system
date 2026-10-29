@@ -25,6 +25,7 @@ Start with the [documentation index](docs/README.md) to browse related product, 
 - [Upstream table and column research](docs/research/existing-system-schemas.md)
 - [Proposed PostgreSQL schema and column dictionary](docs/design/database-schema.md)
 - [Consolidated proposed table and column audit](docs/design/schema-audit.md)
+- [Table relationship diagrams](docs/design/table-relationships.md)
 - [Concurrency and ERP integration contracts](docs/design/posting-and-integration.md)
 - [Contribution provenance](docs/contribution-provenance.md)
 

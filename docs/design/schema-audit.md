@@ -1,7 +1,7 @@
 # Proposed table and column audit
 
 <!-- reading-sequence:start -->
-[Previous: Database schema proposal](database-schema.md) | [Next: Posting and ERP integration](posting-and-integration.md)
+[Previous: Database schema proposal](database-schema.md) | [Next: Table relationships](table-relationships.md)
 <!-- reading-sequence:end -->
 
 [Documentation index](../README.md) | [Project home](../../README.md) | [Table discussions](table-discussions.md)
@@ -1539,5 +1539,5 @@ These are known design work, not implemented tables. Do not infer complete compl
 Run `python scripts/build_schema_audit.py` after editing the two source dictionaries. Review the generated diff. No database credentials or server are used.
 
 <!-- reading-sequence:start -->
-[Previous: Database schema proposal](database-schema.md) | [Next: Posting and ERP integration](posting-and-integration.md)
+[Previous: Database schema proposal](database-schema.md) | [Next: Table relationships](table-relationships.md)
 <!-- reading-sequence:end -->

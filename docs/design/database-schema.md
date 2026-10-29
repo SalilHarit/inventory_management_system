@@ -10,6 +10,8 @@ Date: 2026-10-28. Status: design dictionary, NOT an applied migration or product
 
 The [compliance and trade addendum](compliance-and-trade.md) extends this draft with independent holds, provenance segments in stock identity, shipment/declaration allocations and versioned evidence. Read it before implementing stock_bucket or a single status-based eligibility rule.
 
+See the [table relationship diagrams](table-relationships.md) for a visual overview of the proposed entities and their links.
+
 ## Scope and conventions
 
 One shared stock core across industries. Modules add purchasing, manufacturing and quality without requiring a bill for receipt. A tracked item is a distinct SKU/variant, not a free-text bill description. The proposal targets PostgreSQL 17, whose client is available locally; server configuration is unverified.

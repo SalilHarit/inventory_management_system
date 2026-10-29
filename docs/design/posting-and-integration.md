@@ -1,7 +1,7 @@
 # Posting, concurrency and ERP contracts
 
 <!-- reading-sequence:start -->
-[Previous: Table and column audit](schema-audit.md) | [Next: Compliance and trade design](compliance-and-trade.md)
+[Previous: Table relationships](table-relationships.md) | [Next: Compliance and trade design](compliance-and-trade.md)
 <!-- reading-sequence:end -->
 
 [Documentation index](../README.md) | [Project home](../../README.md) | [Schema proposal](database-schema.md) | [Trade design](compliance-and-trade.md)
@@ -79,5 +79,5 @@ Reconcile counts, external IDs, stock balances and bills on a schedule. Expose l
 These are test specifications, not claims of passing tests.
 
 <!-- reading-sequence:start -->
-[Previous: Table and column audit](schema-audit.md) | [Next: Compliance and trade design](compliance-and-trade.md)
+[Previous: Table relationships](table-relationships.md) | [Next: Compliance and trade design](compliance-and-trade.md)
 <!-- reading-sequence:end -->
